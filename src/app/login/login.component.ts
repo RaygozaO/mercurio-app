@@ -42,8 +42,19 @@ export class LoginComponent {
 
       this.authService.login(formData.usuario_log, formData.clave_log).subscribe({
         next: (response) => {
+          // Guardar token y rol del usuario
           localStorage.setItem('token', response.token);
-          this.router.navigate(['/dashboard']);
+          localStorage.setItem('role', response.role);
+
+          // Redirigir según el rol del usuario
+          const role = response.role;
+          if (role === 'admin') {
+            this.router.navigate(['/admin']);
+          } else if (role === 'ventas') {
+            this.router.navigate(['/ventas']);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
         },
         error: (error) => {
           console.error('Error en el inicio de sesión', error);
