@@ -1,5 +1,6 @@
 :host {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;  // Ocupa toda la altura de la ventana
@@ -8,7 +9,8 @@
 
 .login-container {
   background-color: white;  // Fondo blanco de los inputs
-  padding: 20px;
+  margin: 60px auto;
+  padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -24,4 +26,14 @@ input {
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
+}
+.fuente-azul{
+  font-size: 100px;
+  color: #003754;
+  font-weight: bold;
+  margin: auto;
+  text-align: center;
+}
+.espace-up{
+  margin-top: 20px;
 }
