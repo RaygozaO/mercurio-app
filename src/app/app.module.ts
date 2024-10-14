@@ -10,6 +10,8 @@ import {RecaptchaModule, RecaptchaFormsModule} from "ng-recaptcha";
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminComponent } from './admin/admin.component';
 import { VentasComponent } from './ventas/ventas.component';
+import { MedicosComponent } from './medicos/medicos.component';
+import { ClientesComponent } from './clientes/clientes.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { VentasComponent } from './ventas/ventas.component';
     LoginComponent,
     DashboardComponent,
     AdminComponent,
-    VentasComponent
+    VentasComponent,
+    MedicosComponent,
+    ClientesComponent
   ],
   imports: [
     BrowserModule,
