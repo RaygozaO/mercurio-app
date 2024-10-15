@@ -13,4 +13,13 @@ export interface Usuario {
   email: string;
   password: string; // Considera cifrar esta contraseña antes de enviarla al servidor
 }
-
+export interface Domicilio{
+  iddireccioncliente: number;
+  calle: string;
+  numero: string;
+  interior?: string;
+  codigopostal: string;
+  colonias: any[];
+  municipio: string;
+  entidad: string;
+}

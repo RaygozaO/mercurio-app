@@ -11,6 +11,10 @@ export class ClienteService {
 
   constructor(private http: HttpClient) {}
 
+  obtenerColoniasPorCP(codigoPostal: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/colonias/${codigoPostal}`);
+  }
+
   crearCliente(cliente: Cliente, usuario: Usuario): Observable<any> {
     // Aquí podrías enviar ambos objetos al servidor
     return this.http.post<any>(`${this.apiUrl}/crear`, { cliente, usuario });

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Importa FormBuilder y Validators
-import { Cliente, Usuario } from "./cliente.model";
-import { ClienteService } from '../services/cliente.service'; // Importa tu servicio de cliente
+import {Cliente, Domicilio, Usuario} from "./cliente.model";
+import { ClienteService } from '../services/cliente.service';
+
+
 
 @Component({
   selector: 'app-clientes',
@@ -9,6 +11,7 @@ import { ClienteService } from '../services/cliente.service'; // Importa tu serv
   styleUrls: ['clientes.component.scss']
 })
 export class ClientesComponent {
+
   clienteForm: FormGroup; // Declarar FormGroup para el formulario
   cliente: Cliente = {
     idcliente: 0,
@@ -25,6 +28,17 @@ export class ClientesComponent {
     email: '',
     password: ''
   };
+  domicilio: Domicilio = {
+    iddireccioncliente: 0,
+    calle: '',
+    numero: '',
+    interior: '',
+    codigopostal: '',
+    colonias: [],
+    municipio: '',
+    entidad: '',
+  };
+  //colonias: (NgIterable<unknown> & NgIterable<any>) | undefined | null;
 
   constructor(private fb: FormBuilder, private clientesService: ClienteService) {
     // Inicializa el formulario
@@ -37,6 +51,36 @@ export class ClientesComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+  }
+  buscarColoniasPorCP() {
+    if (this.domicilio.codigopostal.length === 5) {
+      this.clientesService.obtenerColoniasPorCP(this.domicilio.codigopostal).subscribe(
+        (response) => {
+          // Verificar si la respuesta es un array
+          if (Array.isArray(response)) {
+            // Limpiar el array de colonias antes de llenarlo
+            this.domicilio.colonias = [];
+
+            // Iterar sobre la respuesta y agregar los nombres de las colonias
+            response.forEach(colonia => {
+              this.domicilio.colonias.push(colonia.nombrecolonia);
+            });
+
+            // Si hay al menos una colonia, extraer municipio y entidad
+            if (response.length > 0) {
+              const { nombremunicipio, nombreentidad } = response[0];
+              this.domicilio.municipio = nombremunicipio;
+              this.domicilio.entidad = nombreentidad;
+            }
+          } else {
+            console.error('La respuesta no es un array', response);
+          }
+        },
+        (error) => {
+          console.error('Error al obtener colonias', error);
+        }
+      );
+    }
   }
 
   onSubmit() {
@@ -55,6 +99,16 @@ export class ClientesComponent {
         nombreusuario: this.clienteForm.value.nombreusuario,
         email: this.clienteForm.value.email,
         password: this.clienteForm.value.password
+      };
+      const domicilio: Domicilio = {
+        iddireccioncliente: 0,
+        calle: this.clienteForm.value.calle,
+        numero: this.clienteForm.value.numero,
+        interior: this.clienteForm.value.interior,
+        colonias: this.clienteForm.value.colonias,
+        codigopostal: this.clienteForm.value.codigopostal,
+        municipio: this.clienteForm.value.municipio,
+        entidad: this.clienteForm.value.entidad,
       };
 
       // Aquí deberías tener un método en tu ClienteService para crear el cliente y usuario
