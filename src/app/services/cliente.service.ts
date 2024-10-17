@@ -7,7 +7,7 @@ import {Cliente, Usuario} from "../clientes/cliente.model";
   providedIn: 'root'
 })
 export class ClienteService {
-  private apiUrl = 'http://66.55.65.208/api/clientes';  // URL de tu back-end
+  private apiUrl = 'https://66.55.65.208/api/clientes';  // URL de tu back-end
 
   constructor(private http: HttpClient) {}
 
