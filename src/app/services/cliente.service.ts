@@ -8,6 +8,7 @@ import {Cliente, Usuario} from "../clientes/cliente.model";
 })
 export class ClienteService {
   private apiUrl = 'http://localhost:3000/api/clientes';  // URL de tu back-end
+  //private apiUrl= 'https://farmacia-mercurio.com/api/clientes'; URL de producion cambiar antes del push
 
   constructor(private http: HttpClient) {}
 
