@@ -55,7 +55,8 @@
         </div>
         <div class="col-md-6 mb-3">
           <label class="form-label" for="colonias">Colonias:</label>
-          <select id="colonias" class="form-control" [(ngModel)]="domicilio.colonias" name="colonias">
+          <select id="colonias" class="form-control" [(ngModel)]="domicilio.coloniasSelected" name="colonias" >
+            <option value="" disabled selected>Seleccione Colonia</option>
             <option *ngFor="let colonia of domicilio.colonias" [value]="colonia">{{ colonia }}</option>
           </select>
         </div>

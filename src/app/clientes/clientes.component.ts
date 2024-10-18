@@ -29,6 +29,7 @@ export class ClientesComponent {
     password: ''
   };
   domicilio: Domicilio = {
+    coloniasSelected: '',
     iddireccioncliente: 0,
     calle: '',
     numero: '',
@@ -105,10 +106,11 @@ export class ClientesComponent {
         calle: this.clienteForm.value.calle,
         numero: this.clienteForm.value.numero,
         interior: this.clienteForm.value.interior,
-        colonias: this.clienteForm.value.colonias,
+        coloniasSelected: this.clienteForm.value.coloniasSelected,  // Solo la colonia seleccionada
         codigopostal: this.clienteForm.value.codigopostal,
         municipio: this.clienteForm.value.municipio,
         entidad: this.clienteForm.value.entidad,
+        colonias: []  // Vacío ya que no necesitas enviar todas las colonias al backend
       };
 
       // Aquí deberías tener un método en tu ClienteService para crear el cliente y usuario

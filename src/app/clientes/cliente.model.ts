@@ -14,6 +14,7 @@ export interface Usuario {
   password: string; // Considera cifrar esta contraseña antes de enviarla al servidor
 }
 export interface Domicilio{
+  coloniasSelected: string;
   iddireccioncliente: number;
   calle: string;
   numero: string;

@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {Cliente, Usuario} from "../clientes/cliente.model";
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-  private apiUrl = 'http://localhost:3000/api/clientes';  // URL de tu back-end
-  //private apiUrl= 'https://farmacia-mercurio.com/api/clientes'; URL de producion cambiar antes del push
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
