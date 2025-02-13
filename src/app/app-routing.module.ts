@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: 'admin', component: AdminComponent, canActivate: [AuthGuard], data: { roles: ['admin', 'superadmin'] } },
       { path: 'ventas', component: VentasComponent, canActivate: [AuthGuard], data: { roles: ['ventas'] } },
       { path: 'crear-cliente', component: ClientesComponent, canActivate: [AuthGuard] },
-      // Aquí puedes agregar más rutas hijas según lo necesites
+
     ]
   },
 
