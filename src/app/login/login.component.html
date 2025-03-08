@@ -9,19 +9,10 @@
       </p>
       <p class="text-center">Inicia sesión con tu cuenta</p>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="off">
-        <div class="form-group">
-          <label for="UserName" class="bmd-label-floating">
-            <i class="fas fa-user-secret"></i> &nbsp; Usuario
-          </label>
-          <input type="text" class="form-control" id="UserName" formControlName="usuario_log" maxlength="35" required>
-          <div *ngIf="loginForm.get('usuario_log')?.invalid && loginForm.get('usuario_log')?.touched" class="text-danger">
-            El nombre de usuario es requerido y debe tener entre 8 y 30 caracteres alfanuméricos.
-          </div>
-        </div>
 
         <!-- Email -->
         <div class="form-group">
-          <label for="email">Email</label>
+          <label for="email">E-mail</label>
           <input type="email" class="form-control" id="email" formControlName="email" required>
           <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
             El email es requerido.
