@@ -12,6 +12,7 @@ export interface Usuario {
   nombreusuario: string;
   email: string;
   password: string; // Considera cifrar esta contraseña antes de enviarla al servidor
+  password2: string;
 }
 export interface Domicilio{
   coloniasSelected: string;

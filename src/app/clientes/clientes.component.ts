@@ -26,7 +26,8 @@ export class ClientesComponent {
   usuario: Usuario = {
     nombreusuario: '',
     email: '',
-    password: ''
+    password: '',
+    password2: ''
   };
   domicilio: Domicilio = {
     coloniasSelected: '',
@@ -85,44 +86,21 @@ export class ClientesComponent {
   }
 
   onSubmit() {
-    if (this.clienteForm.valid) {
-      const cliente: Cliente = {
-        idcliente: 0, // Asigna un valor adecuado si es necesario
-        nombrecliente: this.clienteForm.value.nombrecliente,
-        apellidopaterno: this.clienteForm.value.apellidopaterno,
-        apellidomaterno: this.clienteForm.value.apellidomaterno,
-        telefono: this.clienteForm.value.telefono,
-        id_usuario: 0, // Se debe asignar después de crear el usuario
-        id_domicilio: 0 // Asignar si es necesario
-      };
-
-      const usuario: Usuario = {
-        nombreusuario: this.clienteForm.value.nombreusuario,
-        email: this.clienteForm.value.email,
-        password: this.clienteForm.value.password
-      };
-      const domicilio: Domicilio = {
-        iddireccioncliente: 0,
-        calle: this.clienteForm.value.calle,
-        numero: this.clienteForm.value.numero,
-        interior: this.clienteForm.value.interior,
-        coloniasSelected: this.clienteForm.value.coloniasSelected,  // Solo la colonia seleccionada
-        codigopostal: this.clienteForm.value.codigopostal,
-        municipio: this.clienteForm.value.municipio,
-        entidad: this.clienteForm.value.entidad,
-        colonias: []  // Vacío ya que no necesitas enviar todas las colonias al backend
-      };
-
-      // Aquí deberías tener un método en tu ClienteService para crear el cliente y usuario
-      this.clientesService.crearCliente(cliente, usuario).subscribe(
-        (response) => {
-          console.log('Cliente creado exitosamente:', response);
-          // Aquí podrías redirigir al usuario o limpiar el formulario
-        },
-        (error) => {
-          console.error('Error al crear el cliente:', error);
-        }
-      );
+    if (this.usuario.password !== this.usuario.password2) {
+      alert('Las contraseñas no coinciden');
+      return;
     }
+
+    this.clientesService.crearCliente(this.cliente, this.usuario, this.domicilio).subscribe({
+      next: (res) => {
+        console.log('Cliente y usuario creados correctamente', res);
+        alert('Registro exitoso. Ahora puedes iniciar sesión.');
+      },
+      error: (err) => {
+        console.error('Error en registro:', err);
+        alert('Hubo un error al registrar el usuario.');
+      }
+    });
   }
+
 }

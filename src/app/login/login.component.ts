@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -13,45 +14,53 @@ export class LoginComponent {
   loginForm: FormGroup;
   captchaResolved: boolean = false;
   captchaToken: string = '';
+  useCaptcha = environment.useCaptcha;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.formBuilder.group({
-      usuario_log: ['', [Validators.required, Validators.pattern('[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ]{8,30}')]],
-      email: ['', [Validators.required, Validators.email]], // Agregar el campo de email
-      clave_log: ['', [Validators.required, Validators.pattern('(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[$*@.\\-])[a-zA-Z0-9$*@.\\-]{7,100}')]]
+      email: ['', [Validators.required, Validators.email]],
+      clave_log: ['', [
+        Validators.required,
+        Validators.pattern('(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[$*@.\\-])[a-zA-Z0-9$*@.\\-]{7,100}')
+      ]]
     });
   }
 
   resolvedCaptcha(captchaResponse: string | null) {
     this.captchaResolved = !!captchaResponse;
-    if (captchaResponse) {
-      this.captchaToken = captchaResponse;
-    } else {
-      this.captchaToken = '';
-    }
+    this.captchaToken = captchaResponse || '';
   }
 
   onSubmit() {
-    if(this.loginForm.valid && this.captchaResolved) {
+    if (this.loginForm.valid && (this.captchaResolved || !this.useCaptcha)) {
       const formData = {
-        usuario_log: this.loginForm.value.usuario_log,
-        clave_log: this.loginForm.value.clave_log,
         email: this.loginForm.value.email,
-        captchaToken: this.captchaToken
+        clave_log: this.loginForm.value.clave_log,
+        captchaToken: this.useCaptcha ? this.captchaToken : 'dummy-token'
       };
 
-      this.authService.login(formData.usuario_log, formData.clave_log).subscribe({
+      this.authService.login(
+        formData.email,
+        formData.clave_log,
+        formData.captchaToken
+      ).subscribe({
         next: (response) => {
-          // Guardar token y rol del usuario
           localStorage.setItem('token', response.token);
-          localStorage.setItem('role', response.role);
 
-          // Redirigir según el rol del usuario
-          const role = response.role;
-          if (role === 'admin') {
+          const decoded = this.decodeToken(response.token);
+          const role = decoded?.id_rol || 'usuario';
+          localStorage.setItem('role', role);
+
+          if (role === 1) {
             this.router.navigate(['/admin']);
-          } else if (role === 'ventas') {
+          } else if (role === 2) {
             this.router.navigate(['/ventas']);
+          } else if (role === 3) {
+            this.router.navigate(['/pacientes']);
           } else {
             this.router.navigate(['/dashboard']);
           }
@@ -61,6 +70,14 @@ export class LoginComponent {
           alert('Error en el inicio de sesión. Por favor verifica tus credenciales.');
         }
       });
+    }
+  }
+
+  private decodeToken(token: string): any {
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch (error) {
+      return null;
     }
   }
 }

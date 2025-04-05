@@ -29,13 +29,18 @@
         </div>
 
         <!-- reCAPTCHA -->
-        <re-captcha>
-          siteKey="6LchcloqAAAAADdb4Y0utBdZ4wssMhCpCIOtYlWr"
+        <re-captcha
+          *ngIf="useCaptcha"
+          [siteKey]="'6LchcloqAAAAADdb4Y0utBdZ4wssMhCpCIOtYlWr'"
           (resolved)="resolvedCaptcha($event)">
         </re-captcha>
 
         <!-- Botón de inicio de sesión -->
-        <button class="btn btn-dark espace-up" type="submit" [disabled] ="!loginForm.valid || !captchaResolved">Login</button>
+        <button class="btn btn-dark espace-up" type="submit" [disabled]="!loginForm.valid || (useCaptcha && !captchaResolved)">Login</button>
+        <p class="text-danger">Formulario válido: {{ loginForm.valid }}</p>
+        <p class="text-danger">Captcha resuelto: {{ captchaResolved }}</p>
+        <p class="text-danger">¿Usar captcha?: {{ useCaptcha }}</p>
+
       </form>
     </div>
   </div>

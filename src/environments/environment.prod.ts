@@ -1,4 +1,5 @@
 export const environment = {
     production: true,
-    apiUrl: 'https://farmacia-mercurio.com/api/clientes'
+    apiUrl: 'https://farmacia-mercurio.com/api/clientes',
+    useCaptcha: true
 };
