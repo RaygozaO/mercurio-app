@@ -39,13 +39,13 @@ export class LoginComponent {
     if (this.loginForm.valid && (this.captchaResolved || !this.useCaptcha)) {
       const formData = {
         email: this.loginForm.value.email,
-        clave_log: this.loginForm.value.clave_log,
+        pass: this.loginForm.value.clave_log,
         captchaToken: this.useCaptcha ? this.captchaToken : 'dummy-token'
       };
 
       this.authService.login(
         formData.email,
-        formData.clave_log,
+        formData.pass,
         formData.captchaToken
       ).subscribe({
         next: (response) => {
