@@ -3,7 +3,7 @@ export const environment = {
   useCaptcha: true,
   apiBaseUrl: 'https://farmacia-mercurio.com/api',
   endpoints: {
-    login: '/auth/login',
+    login: '/login',
     clientes: '/clientes',
     crear: '/clientes/crear'
   }
