@@ -1,7 +1,12 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api/clientes',
-  useCaptcha: false // 👈 desactiva el captcha en desarrollo
+  useCaptcha: false,
+  apiBaseUrl: 'http://localhost:3000/api',
+  endpoints: {
+    login: '/auth/login',
+    clientes: '/clientes',
+    crearCliente: '/clientes/crear'
+  }
 };
 

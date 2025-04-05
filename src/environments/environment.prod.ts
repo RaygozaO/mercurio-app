@@ -1,5 +1,10 @@
 export const environment = {
-    production: true,
-    apiUrl: 'https://farmacia-mercurio.com/api/clientes',
-    useCaptcha: true
+  production: true,
+  useCaptcha: true,
+  apiBaseUrl: 'https://farmacia-mercurio.com/api',
+  endpoints: {
+    login: '/auth/login',
+    clientes: '/clientes',
+    crear: '/clientes/crear'
+  }
 };
